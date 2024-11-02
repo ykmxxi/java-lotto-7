@@ -1,11 +1,15 @@
 package lotto.domain.winning;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class WinningStatisticsTest {
 
@@ -30,6 +34,16 @@ class WinningStatisticsTest {
         winningStatistics.save(lottoRank);
 
         assertThat(winningStatistics.findWinningCountByLottoRank(lottoRank)).isEqualTo(1L);
+    }
+
+    @DisplayName("소수점 아래 둘째 자리에서 반올림한 수익률 값을 계산한다.")
+    @CsvSource(value = {"8000,62.5", "3000,166.7"})
+    @ParameterizedTest
+    void 당첨_통계_수익률_계산(long totalAmount, String expectedRateOfReturn) {
+        winningStatistics.save(LottoRank.FIFTH);
+
+        assertThat(winningStatistics.calculateRateOfReturn(totalAmount).toString())
+                .isEqualTo(expectedRateOfReturn);
     }
 
 }

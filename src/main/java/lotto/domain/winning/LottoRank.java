@@ -48,4 +48,7 @@ public enum LottoRank {
                 .orElse(NONE);
     }
 
+    public long calculateWinningMoneyTotal(final Long winningCount) {
+        return this.winningMoney * winningCount;
+    }
 }
