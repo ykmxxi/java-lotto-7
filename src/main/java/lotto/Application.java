@@ -1,7 +1,14 @@
 package lotto;
 
+import lotto.presentation.LottoWinningClient;
+import lotto.presentation.view.InputView;
+
 public class Application {
+
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        LottoWinningClient lottoWinningClient = new LottoWinningClient(new InputView());
+
+        lottoWinningClient.run();
     }
+
 }
