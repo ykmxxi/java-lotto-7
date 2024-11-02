@@ -25,4 +25,11 @@ public class Winning {
         }
     }
 
+    public LottoRank compare(final Lotto lotto) {
+        int matchingCount = winningLotto.calculateMatchingCount(lotto);
+        boolean hasBonusNumber = lotto.has(bonusNumber);
+
+        return LottoRank.find(matchingCount, hasBonusNumber);
+    }
+
 }

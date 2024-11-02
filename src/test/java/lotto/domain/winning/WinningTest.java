@@ -1,5 +1,6 @@
 package lotto.domain.winning;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -11,6 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+
+import lotto.domain.lotto.Lotto;
 
 class WinningTest {
 
@@ -45,11 +48,34 @@ class WinningTest {
                 .hasMessageStartingWith("[ERROR]");
     }
 
+    @DisplayName("로또 번호를 주면 당첨을 비교해준다.")
+    @MethodSource("provideNumbersAndLottoRank")
+    @ParameterizedTest
+    void 당첨_확인(List<Integer> numbers, LottoRank expectedRank) {
+        Winning winning = Winning.draw(List.of(1, 2, 3, 4, 5, 6), 7);
+        Lotto lotto = Lotto.issue(numbers);
+
+        assertThat(winning.compare(lotto)).isEqualTo(expectedRank);
+    }
+
     static Stream<Arguments> provideWrongWinningNumbers() {
         return Stream.of(
                 Arguments.of(List.of(1, 2, 3, 4, 5, 6, 7)),
                 Arguments.of(List.of(1, 2, 3, 4, 5, 5)),
                 Arguments.of(List.of(1, 2, 3, 4, 5, 46))
+        );
+    }
+
+    static Stream<Arguments> provideNumbersAndLottoRank() {
+        return Stream.of(
+                Arguments.of(List.of(7, 8, 9, 10, 11, 12), LottoRank.NONE),
+                Arguments.of(List.of(1, 7, 8, 9, 10, 11), LottoRank.NONE),
+                Arguments.of(List.of(1, 2, 7, 8, 9, 10), LottoRank.NONE),
+                Arguments.of(List.of(1, 2, 3, 7, 8, 9), LottoRank.FIFTH),
+                Arguments.of(List.of(1, 2, 3, 4, 7, 8), LottoRank.FOURTH),
+                Arguments.of(List.of(1, 2, 3, 4, 5, 8), LottoRank.THIRD),
+                Arguments.of(List.of(1, 2, 3, 4, 5, 7), LottoRank.SECOND),
+                Arguments.of(List.of(1, 2, 3, 4, 5, 6), LottoRank.FIRST)
         );
     }
 

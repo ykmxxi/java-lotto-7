@@ -2,6 +2,8 @@ package lotto.domain.lotto;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 public class Lotto {
 
@@ -14,6 +16,16 @@ public class Lotto {
 
     public static Lotto issue(final List<Integer> numbers) {
         return new Lotto(numbers);
+    }
+
+    public int calculateMatchingCount(final Lotto lotto) {
+        return (int) IntStream.range(0, LottoRule.LOTTO_NUMBERS_SIZE.value())
+                .filter(i -> Objects.equals(numbers.get(i), lotto.numbers.get(i)))
+                .count();
+    }
+
+    public boolean has(final int number) {
+        return numbers.contains(number);
     }
 
     private void validate(List<Integer> numbers) {
