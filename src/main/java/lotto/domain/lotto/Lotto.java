@@ -7,16 +7,19 @@ public class Lotto {
 
     private final List<Integer> numbers;
 
-    public Lotto(List<Integer> numbers) {
+    private Lotto(List<Integer> numbers) {
         validate(numbers);
         this.numbers = numbers;
+    }
+
+    public static Lotto issue(final List<Integer> numbers) {
+        return new Lotto(numbers);
     }
 
     private void validate(List<Integer> numbers) {
         validateNumbersSize(numbers);
         validateLottoNumberRange(numbers);
         validateDuplication(numbers);
-
     }
 
     private void validateNumbersSize(final List<Integer> numbers) {
@@ -37,6 +40,11 @@ public class Lotto {
         if (LottoRule.isSizeRuleViolation(new HashSet<>(numbers).size())) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 중복되지 않아야 합니다.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Lotto" + numbers;
     }
 
 }
