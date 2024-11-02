@@ -1,5 +1,6 @@
 package lotto.presentation;
 
+import camp.nextstep.edu.missionutils.Console;
 import lotto.presentation.view.InputView;
 import lotto.presentation.view.ResultView;
 import lotto.service.LottoWinningService;
@@ -24,12 +25,18 @@ public class LottoWinningClient {
     }
 
     public void run() {
-        long purchaseAmount = readPurchaseAmount();
-        LottoPurchaseResponse lottoPurchaseResponse = lottoWinningService.purchaseLotto(purchaseAmount);
+        try {
+            long purchaseAmount = readPurchaseAmount();
+            LottoPurchaseResponse lottoPurchaseResponse = lottoWinningService.purchaseLotto(purchaseAmount);
 
-        resultView.printLottoPurchaseResult(lottoPurchaseResponse);
+            resultView.printLottoPurchaseResult(lottoPurchaseResponse);
 
-        DrawWinningResponse drawWinningResponse = drawWinning();
+            DrawWinningResponse drawWinningResponse = drawWinning();
+
+            resultView.printDrawWinningResult(drawWinningResponse);
+        } finally {
+            Console.close();
+        }
     }
 
     private long readPurchaseAmount() {

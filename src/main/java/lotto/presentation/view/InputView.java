@@ -41,7 +41,7 @@ public class InputView {
             validateNull(inputLine);
             validateBlank(inputLine);
             return inputLine;
-        } catch (NoSuchElementException | IllegalStateException e) {
+        } catch (IllegalStateException e) {
             throw new IllegalStateException("[ERROR] 콘솔에 문제가 생겨 프로그램을 종료합니다. 다시 실행해 주세요.");
         }
     }
