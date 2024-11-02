@@ -54,6 +54,12 @@ public class Lotto {
         }
     }
 
+    public List<Integer> numbers() {
+        return numbers.stream()
+                .sorted()
+                .toList();
+    }
+
     @Override
     public String toString() {
         return "Lotto" + numbers;
