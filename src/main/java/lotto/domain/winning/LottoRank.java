@@ -51,4 +51,12 @@ public enum LottoRank {
     public long calculateWinningMoneyTotal(final Long winningCount) {
         return this.winningMoney * winningCount;
     }
+
+    public long winningMoney() {
+        return this.winningMoney;
+    }
+
+    public int matchingCount() {
+        return this.matchingCount;
+    }
 }

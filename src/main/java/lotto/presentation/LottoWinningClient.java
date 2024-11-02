@@ -3,6 +3,7 @@ package lotto.presentation;
 import lotto.presentation.view.InputView;
 import lotto.presentation.view.ResultView;
 import lotto.service.LottoWinningService;
+import lotto.service.dto.DrawWinningResponse;
 import lotto.service.dto.LottoPurchaseResponse;
 
 public class LottoWinningClient {
@@ -28,8 +29,7 @@ public class LottoWinningClient {
 
         resultView.printLottoPurchaseResult(lottoPurchaseResponse);
 
-        String winningNumbers = readWinningNumbers();
-        String bonusNumber = readBonusNumber();
+        DrawWinningResponse drawWinningResponse = drawWinning();
     }
 
     private long readPurchaseAmount() {
@@ -58,6 +58,20 @@ public class LottoWinningClient {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readBonusNumber();
+        }
+    }
+
+    private DrawWinningResponse drawWinning() {
+        try {
+            String winningNumbers = readWinningNumbers();
+            String bonusNumber = readBonusNumber();
+            return lottoWinningService.drawWinning(
+                    winningNumbers,
+                    Integer.parseInt(bonusNumber)
+            );
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return drawWinning();
         }
     }
 

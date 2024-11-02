@@ -10,8 +10,8 @@ public class Winning {
     private final int bonusNumber;
 
     private Winning(final List<Integer> winningNumbers, final int bonusNumber) {
-        validateBonusNumberDuplication(winningNumbers, bonusNumber);
         this.winningLotto = Lotto.issue(winningNumbers);
+        validateBonusNumberDuplication(winningNumbers, bonusNumber);
         this.bonusNumber = bonusNumber;
     }
 
