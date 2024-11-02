@@ -1,6 +1,7 @@
 package lotto.presentation;
 
 import lotto.presentation.view.InputView;
+import lotto.presentation.view.ResultView;
 import lotto.service.LottoWinningService;
 import lotto.service.dto.LottoPurchaseResponse;
 
@@ -8,19 +9,24 @@ public class LottoWinningClient {
 
     private static final long AMOUNT_UNIT = 1000L;
     private final InputView inputView;
+    private final ResultView resultView;
     private final LottoWinningService lottoWinningService;
 
     public LottoWinningClient(
             final InputView inputView,
+            final ResultView resultView,
             final LottoWinningService lottoWinningService
     ) {
         this.inputView = inputView;
+        this.resultView = resultView;
         this.lottoWinningService = lottoWinningService;
     }
 
     public void run() {
         long purchaseAmount = readPurchaseAmount();
         LottoPurchaseResponse lottoPurchaseResponse = lottoWinningService.purchaseLotto(purchaseAmount);
+
+        resultView.printLottoPurchaseResult(lottoPurchaseResponse);
     }
 
     private long readPurchaseAmount() {
