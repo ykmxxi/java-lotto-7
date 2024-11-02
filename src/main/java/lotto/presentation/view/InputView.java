@@ -26,6 +26,15 @@ public class InputView {
         return winningNumbersInput;
     }
 
+    public String readBonusNumber() {
+        System.out.println();
+        System.out.println("보너스 번호를 입력해 주세요.");
+
+        String bonusNumberInput = readInputLine();
+        validatePositiveNumber(bonusNumberInput);
+        return bonusNumberInput;
+    }
+
     private String readInputLine() {
         try {
             String inputLine = Console.readLine();
