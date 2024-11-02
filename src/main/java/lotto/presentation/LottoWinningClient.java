@@ -27,6 +27,8 @@ public class LottoWinningClient {
         LottoPurchaseResponse lottoPurchaseResponse = lottoWinningService.purchaseLotto(purchaseAmount);
 
         resultView.printLottoPurchaseResult(lottoPurchaseResponse);
+
+        String winningNumbers = readWinningNumbers();
     }
 
     private long readPurchaseAmount() {
@@ -37,6 +39,15 @@ public class LottoWinningClient {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readPurchaseAmount();
+        }
+    }
+
+    private String readWinningNumbers() {
+        try {
+            return inputView.readWinningNumbers();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return readWinningNumbers();
         }
     }
 

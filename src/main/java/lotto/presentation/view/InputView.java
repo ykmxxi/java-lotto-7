@@ -8,6 +8,7 @@ import camp.nextstep.edu.missionutils.Console;
 public class InputView {
 
     private static final Pattern POSITIVE_NUMBER = Pattern.compile("\\d+");
+    private static final Pattern WINNING_NUMBERS = Pattern.compile("(\\d+,){5}\\d+");
 
     public String readPurchaseAmount() {
         System.out.println("구입금액을 입력해 주세요.");
@@ -15,6 +16,14 @@ public class InputView {
         String purchaseAmountInput = readInputLine();
         validatePositiveNumber(purchaseAmountInput);
         return purchaseAmountInput;
+    }
+
+    public String readWinningNumbers() {
+        System.out.println("당첨 번호를 입력해 주세요.");
+
+        String winningNumbersInput = readInputLine();
+        validateWinningNumbersPattern(winningNumbersInput);
+        return winningNumbersInput;
     }
 
     private String readInputLine() {
@@ -45,6 +54,14 @@ public class InputView {
                 .matches()
         ) {
             throw new IllegalArgumentException("[ERROR] 양수를 입력해 주세요.");
+        }
+    }
+
+    private void validateWinningNumbersPattern(final String input) {
+        if (!WINNING_NUMBERS.matcher(input)
+                .matches()
+        ) {
+            throw new IllegalArgumentException("[ERROR] 당첨 번호는 6개의 숫자를 쉼표(,)로 구분해 입력해 주세요.");
         }
     }
 
