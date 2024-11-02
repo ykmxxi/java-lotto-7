@@ -21,4 +21,8 @@ public enum LottoRule {
                 number > LOTTO_NUMBER_END_INCLUSIVE.value;
     }
 
+    public int value() {
+        return value;
+    }
+
 }
