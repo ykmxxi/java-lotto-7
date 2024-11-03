@@ -13,7 +13,7 @@ public class Application {
                 new ResultView(),
                 new LottoWinningService()
         );
-        
+
         lottoWinningClient.run();
     }
 

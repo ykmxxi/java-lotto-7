@@ -1,6 +1,5 @@
 package lotto.presentation.view;
 
-import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 import camp.nextstep.edu.missionutils.Console;

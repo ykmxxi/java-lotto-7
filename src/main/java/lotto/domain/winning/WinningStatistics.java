@@ -30,7 +30,7 @@ public class WinningStatistics {
         return statistics.get(lottoRank);
     }
 
-    public BigDecimal calculateRateOfReturn(long totalAmount) {
+    public BigDecimal calculateRateOfReturn(final long totalAmount) {
         BigDecimal winningMoneyTotal = calculateWinningMoneyTotal();
 
         return winningMoneyTotal.multiply(PERCENT_MULTIPLIER)
