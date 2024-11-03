@@ -50,6 +50,42 @@ public class LottoWinningClient {
         }
     }
 
+
+    private DrawWinningResponse drawWinning() {
+        drawWinningLotto();
+        return drawWinningResponse();
+    }
+
+    private DrawWinningResponse drawWinningResponse() {
+        try {
+            drawBonusNumber();
+            return lottoWinningService.drawWinning();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return drawWinningResponse();
+        }
+    }
+
+    private void drawWinningLotto() {
+        try {
+            String winningNumbers = readWinningNumbers();
+            lottoWinningService.drawWinningLotto(winningNumbers);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            drawWinningLotto();
+        }
+    }
+
+    private void drawBonusNumber() {
+        try {
+            String bonusNumber = readBonusNumber();
+            lottoWinningService.drawBonusNumber(bonusNumber);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            drawBonusNumber();
+        }
+    }
+
     private String readWinningNumbers() {
         try {
             return inputView.readWinningNumbers();
@@ -65,20 +101,6 @@ public class LottoWinningClient {
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return readBonusNumber();
-        }
-    }
-
-    private DrawWinningResponse drawWinning() {
-        try {
-            String winningNumbers = readWinningNumbers();
-            String bonusNumber = readBonusNumber();
-            return lottoWinningService.drawWinning(
-                    winningNumbers,
-                    Integer.parseInt(bonusNumber)
-            );
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            return drawWinning();
         }
     }
 

@@ -23,7 +23,7 @@ class WinningTest {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
         int bonusNumber = 7;
 
-        assertDoesNotThrow(() -> Winning.draw(winningNumbers, bonusNumber));
+        assertDoesNotThrow(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber));
     }
 
     @DisplayName("당첨 번호로 로또 발행을 실패하면 예외가 발생한다.")
@@ -32,7 +32,7 @@ class WinningTest {
     void 당첨번호_추첨_실패(List<Integer> winningNumbers) {
         int bonusNumber = 7;
 
-        assertThatThrownBy(() -> Winning.draw(winningNumbers, bonusNumber))
+        assertThatThrownBy(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("[ERROR]");
     }
@@ -43,7 +43,7 @@ class WinningTest {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
         int bonusNumber = 6;
 
-        assertThatThrownBy(() -> Winning.draw(winningNumbers, bonusNumber))
+        assertThatThrownBy(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageStartingWith("[ERROR]");
     }
@@ -52,7 +52,7 @@ class WinningTest {
     @MethodSource("provideNumbersAndLottoRank")
     @ParameterizedTest
     void 당첨_확인(List<Integer> numbers, LottoRank expectedRank) {
-        Winning winning = Winning.draw(List.of(1, 2, 3, 4, 5, 6), 7);
+        Winning winning = Winning.draw(Lotto.issue(List.of(1, 2, 3, 4, 5, 6)), 7);
         Lotto lotto = Lotto.issue(numbers);
 
         assertThat(winning.compare(lotto)).isEqualTo(expectedRank);

@@ -18,6 +18,8 @@ import lotto.service.dto.WinningResult;
 public class LottoWinningService {
 
     private final LottoTickets lottoTickets = new LottoTickets();
+    private Lotto winningLotto;
+    private String bonusNumber;
 
     public LottoPurchaseResponse purchaseLotto(final long purchaseQuantity) {
         for (long quantity = 1L; quantity <= purchaseQuantity; quantity++) {
@@ -30,10 +32,34 @@ public class LottoWinningService {
         return toLottoPurchaseResponse(tickets);
     }
 
-    public DrawWinningResponse drawWinning(final String winningNumbersInput, final int bonusNumber) {
-        NumbersCreator inputSplitNumbersCreator = new InputSplitNumbersCreator(winningNumbersInput);
-        Winning winning = Winning.draw(inputSplitNumbersCreator.create(), bonusNumber);
+    public void drawWinningLotto(final String winningNumbers) {
+        winningLotto = createWinningLotto(winningNumbers);
+    }
 
+    public void drawBonusNumber(final String bonusNumber) {
+        this.bonusNumber = bonusNumber;
+    }
+
+    public DrawWinningResponse drawWinning() {
+        return drawWinningWithBonusNumber();
+    }
+
+    private Lotto createWinningLotto(final String winningNumbersInput) {
+        NumbersCreator inputSplitNumbersCreator = new InputSplitNumbersCreator(winningNumbersInput);
+        List<Integer> winningNumbers = inputSplitNumbersCreator.create();
+        return Lotto.issue(winningNumbers);
+    }
+
+    private DrawWinningResponse drawWinningWithBonusNumber() {
+        try {
+            Winning winning = Winning.draw(winningLotto, Integer.parseInt(bonusNumber));
+            return calculateWinningStatistics(winning);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호가 유효하지 않습니다.");
+        }
+    }
+
+    private DrawWinningResponse calculateWinningStatistics(final Winning winning) {
         WinningStatistics winningStatistics = WinningStatistics.create();
         List<Lotto> tickets = lottoTickets.findAll();
         for (Lotto lotto : tickets) {
