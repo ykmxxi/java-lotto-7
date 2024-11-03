@@ -8,6 +8,8 @@ import java.util.Map;
 
 public class WinningStatistics {
 
+    private static final BigDecimal PERCENT_MULTIPLIER = BigDecimal.valueOf(100L);
+
     private final Map<LottoRank, Long> statistics;
 
     private WinningStatistics(final Map<LottoRank, Long> statistics) {
@@ -29,15 +31,21 @@ public class WinningStatistics {
     }
 
     public BigDecimal calculateRateOfReturn(long totalAmount) {
+        BigDecimal winningMoneyTotal = calculateWinningMoneyTotal();
+
+        return winningMoneyTotal.multiply(PERCENT_MULTIPLIER)
+                .divide(BigDecimal.valueOf(totalAmount), 1, RoundingMode.HALF_UP);
+    }
+
+    private BigDecimal calculateWinningMoneyTotal() {
         BigDecimal winningMoneyTotal = BigDecimal.ZERO;
         for (LottoRank lottoRank : statistics.keySet()) {
-            Long winningCount = statistics.get(lottoRank);
+            long winningCount = statistics.get(lottoRank);
             winningMoneyTotal = winningMoneyTotal.add(
                     BigDecimal.valueOf(lottoRank.calculateWinningMoneyTotal(winningCount))
             );
         }
-        return winningMoneyTotal.multiply(BigDecimal.valueOf(100L))
-                .divide(BigDecimal.valueOf(totalAmount), 1, RoundingMode.HALF_UP);
+        return winningMoneyTotal;
     }
 
     private static void initStatistics(final Map<LottoRank, Long> emptyStatistics) {
