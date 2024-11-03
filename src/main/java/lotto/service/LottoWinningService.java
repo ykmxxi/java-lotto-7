@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import lotto.domain.lotto.Lotto;
+import lotto.domain.lotto.LottoBall;
 import lotto.domain.lotto.LottoTickets;
 import lotto.domain.winning.LottoRank;
 import lotto.domain.winning.Winning;
