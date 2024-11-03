@@ -84,17 +84,30 @@ public class LottoWinningService {
             final WinningStatistics winningStatistics,
             final long totalAmount
     ) {
-        Map<WinningResult, Long> winningResultStatistics = new LinkedHashMap<>();
+        Map<WinningResult, Long> winningResultStatistics = createWinningResultStatistics(winningStatistics);
+        BigDecimal rateOfReturn = winningStatistics.calculateRateOfReturn(totalAmount);
+        return new DrawWinningResponse(winningResultStatistics, rateOfReturn.toString());
+    }
+
+    private Map<WinningResult, Long> createWinningResultStatistics(final WinningStatistics winningStatistics) {
+        LinkedHashMap<WinningResult, Long> winningResultStatistics = new LinkedHashMap<>();
         for (LottoRank lottoRank : LottoRank.values()) {
             if (lottoRank == LottoRank.NONE) {
                 continue;
             }
             long winningCount = winningStatistics.findWinningCountByLottoRank(lottoRank);
-            WinningResult winningResult = new WinningResult(lottoRank.matchingCount(), lottoRank.winningMoney());
+            WinningResult winningResult = createWinningResult(lottoRank);
             winningResultStatistics.put(winningResult, winningCount);
         }
-        BigDecimal rateOfReturn = winningStatistics.calculateRateOfReturn(totalAmount);
-        return new DrawWinningResponse(winningResultStatistics, rateOfReturn.toString());
+        return winningResultStatistics;
+    }
+
+    private WinningResult createWinningResult(final LottoRank lottoRank) {
+        return new WinningResult(
+                lottoRank.matchingCount(),
+                lottoRank.winningMoney(),
+                lottoRank.hasBonusNumber()
+        );
     }
 
 }
