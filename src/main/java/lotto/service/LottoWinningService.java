@@ -22,13 +22,9 @@ public class LottoWinningService {
     private Lotto winningLotto;
     private String bonusNumber;
 
-    public LottoPurchaseResponse purchaseLotto(final long purchaseAmountInput) {
+    public LottoPurchaseResponse buyAutoLotto(final long purchaseAmountInput) {
         PurchaseAmount purchaseAmount = new PurchaseAmount(purchaseAmountInput);
-        for (long count = 1L; count <= purchaseAmount.getCountOfTicket(); count++) {
-            NumbersCreator randomNumbersCreator = new RandomNumbersCreator();
-            List<Integer> randomNumbers = randomNumbersCreator.create();
-            lottoTickets.save(Lotto.issue(randomNumbers));
-        }
+        saveAllLottoTicket(purchaseAmount);
 
         List<Lotto> tickets = lottoTickets.findAll();
         return toLottoPurchaseResponse(tickets);
@@ -44,6 +40,14 @@ public class LottoWinningService {
 
     public WinningDrawResponse drawWinning() {
         return drawWinningWithBonusNumber();
+    }
+
+    private void saveAllLottoTicket(final PurchaseAmount purchaseAmount) {
+        for (long count = 1L; count <= purchaseAmount.getCountOfTicket(); count++) {
+            NumbersCreator randomNumbersCreator = new RandomNumbersCreator();
+            List<Integer> randomNumbers = randomNumbersCreator.create();
+            lottoTickets.save(Lotto.issue(randomNumbers));
+        }
     }
 
     private Lotto createWinningLotto(final String winningNumbersInput) {

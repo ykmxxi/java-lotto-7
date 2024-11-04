@@ -41,7 +41,7 @@ public class LottoWinningClient {
             String purchaseAmountInput = inputView.readPurchaseAmount()
                     .replaceAll("[,|원]", "");
             long purchaseAmount = Long.parseLong(purchaseAmountInput);
-            return lottoWinningService.purchaseLotto(purchaseAmount);
+            return lottoWinningService.buyAutoLotto(purchaseAmount);
         } catch (IllegalArgumentException e) {
             resultView.printUserExceptionMessage(e.getMessage());
             return buyLotto();
