@@ -8,6 +8,7 @@ import java.util.Map;
 
 import lotto.domain.lotto.Lotto;
 import lotto.domain.lotto.LottoTickets;
+import lotto.domain.lotto.PurchaseAmount;
 import lotto.domain.winning.LottoRank;
 import lotto.domain.winning.Winning;
 import lotto.domain.winning.WinningStatistics;
@@ -21,8 +22,9 @@ public class LottoWinningService {
     private Lotto winningLotto;
     private String bonusNumber;
 
-    public LottoPurchaseResponse purchaseLotto(final long purchaseQuantity) {
-        for (long quantity = 1L; quantity <= purchaseQuantity; quantity++) {
+    public LottoPurchaseResponse purchaseLotto(final long purchaseAmountInput) {
+        PurchaseAmount purchaseAmount = new PurchaseAmount(purchaseAmountInput);
+        for (long count = 1L; count <= purchaseAmount.getCountOfTicket(); count++) {
             NumbersCreator randomNumbersCreator = new RandomNumbersCreator();
             List<Integer> randomNumbers = randomNumbersCreator.create();
             lottoTickets.save(Lotto.issue(randomNumbers));
