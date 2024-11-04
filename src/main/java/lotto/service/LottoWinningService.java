@@ -84,8 +84,8 @@ public class LottoWinningService {
             final long totalAmount
     ) {
         Map<WinningResult, Long> winningResultStatistics = createWinningResultStatistics(winningStatistics);
-        BigDecimal rateOfReturn = winningStatistics.calculateRateOfReturn(totalAmount);
-        return new DrawWinningResponse(winningResultStatistics, rateOfReturn);
+        BigDecimal returnOnInvestment = winningStatistics.calculateReturnOnInvestment(totalAmount);
+        return new DrawWinningResponse(winningResultStatistics, returnOnInvestment);
     }
 
     private Map<WinningResult, Long> createWinningResultStatistics(final WinningStatistics winningStatistics) {
@@ -94,7 +94,7 @@ public class LottoWinningService {
             if (lottoRank == LottoRank.NONE) {
                 continue;
             }
-            long winningCount = winningStatistics.findWinningCountByLottoRank(lottoRank);
+            long winningCount = winningStatistics.getWinningCount(lottoRank);
             WinningResult winningResult = createWinningResult(lottoRank);
             winningResultStatistics.put(winningResult, winningCount);
         }

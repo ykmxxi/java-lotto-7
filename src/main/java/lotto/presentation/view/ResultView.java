@@ -31,7 +31,7 @@ public class ResultView {
 
         appendDrawWinningResultGuide(builder);
         appendWinningResultStatistics(builder, drawWinningResponse);
-        appendRateOfReturn(builder, drawWinningResponse.rateOfReturn());
+        appendReturnOnInvestment(builder, drawWinningResponse.returnOnInvestment());
 
         System.out.println(builder);
     }
@@ -76,13 +76,9 @@ public class ResultView {
         }
     }
 
-    private void appendRateOfReturn(final StringBuilder builder, final BigDecimal rateOfReturn) {
-        DecimalFormat rateOfReturnFormat = new DecimalFormat("#,##0.0");
-        BigDecimal rateOfReturnPercentageValue = rateOfReturn.multiply(BigDecimal.valueOf(100L))
-                .setScale(1, RoundingMode.HALF_UP);
-
-        String rateOfReturnMessage = formatRateOfReturnMessage(rateOfReturnFormat.format(rateOfReturnPercentageValue));
-        builder.append(rateOfReturnMessage);
+    private void appendReturnOnInvestment(final StringBuilder builder, final BigDecimal returnOnInvestment) {
+        String returnOnInvestmentMessage = formatReturnOnInvestmentMessage(returnOnInvestment);
+        builder.append(returnOnInvestmentMessage);
     }
 
     private String formatPurchaseCountMessage(final int lottoTicketsCount) {
@@ -108,9 +104,18 @@ public class ResultView {
         return String.join("", winningResultStatistics, "개");
     }
 
-    private String formatRateOfReturnMessage(final String rateOfReturn) {
-        String rateOfReturnPercentage = String.join("", rateOfReturn, "%");
-        return String.format("총 수익률은 %s입니다.", rateOfReturnPercentage);
+    private String formatReturnOnInvestmentMessage(final BigDecimal returnOnInvestment) {
+        DecimalFormat returnOnInvestmentFormat = new DecimalFormat("#,##0.0");
+        BigDecimal returnOnInvestmentPercentage = getRoundingPercentage(returnOnInvestment);
+
+        String returnOnInvestmentPercentageMessage = String.join("",
+                returnOnInvestmentFormat.format(returnOnInvestmentPercentage), "%");
+        return String.format("총 수익률은 %s입니다.", returnOnInvestmentPercentageMessage);
+    }
+
+    private BigDecimal getRoundingPercentage(final BigDecimal returnOnInvestment) {
+        return returnOnInvestment.multiply(BigDecimal.valueOf(100L))
+                .setScale(1, RoundingMode.HALF_UP);
     }
 
 }

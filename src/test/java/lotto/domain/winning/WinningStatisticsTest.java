@@ -21,7 +21,7 @@ class WinningStatisticsTest {
     @EnumSource(value = LottoRank.class)
     @ParameterizedTest
     void 당첨_통계_초기화(LottoRank lottoRank) {
-        assertThat(winningStatistics.findWinningCountByLottoRank(lottoRank)).isEqualTo(0L);
+        assertThat(winningStatistics.getWinningCount(lottoRank)).isEqualTo(0L);
     }
 
     @DisplayName("당첨 통계에 등수를 저장하면 당첨 횟수가 1 증가한다.")
@@ -30,7 +30,7 @@ class WinningStatisticsTest {
     void 당첨_통계_저장(LottoRank lottoRank) {
         winningStatistics.save(lottoRank);
 
-        assertThat(winningStatistics.findWinningCountByLottoRank(lottoRank)).isEqualTo(1L);
+        assertThat(winningStatistics.getWinningCount(lottoRank)).isEqualTo(1L);
     }
 
     @DisplayName("정확한 소수점 계산과 순환 소수 방지를 위해 최대 16자리로(마지막 자리 밑에서 반올림) 제한해 수익률을 계산한다.")
@@ -39,7 +39,7 @@ class WinningStatisticsTest {
     void 당첨_통계_수익률_계산(long totalAmount, String expectedRateOfReturn) {
         winningStatistics.save(LottoRank.FIFTH);
 
-        assertThat(winningStatistics.calculateRateOfReturn(totalAmount).toString())
+        assertThat(winningStatistics.calculateReturnOnInvestment(totalAmount).toString())
                 .isEqualTo(expectedRateOfReturn);
     }
 

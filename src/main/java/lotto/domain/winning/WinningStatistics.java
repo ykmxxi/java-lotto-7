@@ -24,11 +24,11 @@ public class WinningStatistics {
         statistics.computeIfPresent(lottoRank, (key, value) -> value + 1L);
     }
 
-    public long findWinningCountByLottoRank(final LottoRank lottoRank) {
+    public long getWinningCount(final LottoRank lottoRank) {
         return statistics.get(lottoRank);
     }
 
-    public BigDecimal calculateRateOfReturn(final long totalAmount) {
+    public BigDecimal calculateReturnOnInvestment(final long totalAmount) {
         BigDecimal winningMoneyTotal = calculateWinningMoneyTotal();
 
         return winningMoneyTotal.divide(BigDecimal.valueOf(totalAmount), MathContext.DECIMAL64);
