@@ -70,7 +70,8 @@ public class LottoWinningService {
     private LottoPurchaseResponse toLottoPurchaseResponse(final List<Lotto> tickets) {
         List<List<String>> lottoNumbers = new ArrayList<>();
         for (Lotto ticket : tickets) {
-            lottoNumbers.add(ticket.numbers().stream()
+            lottoNumbers.add(ticket.numbers()
+                    .stream()
                     .map(String::valueOf)
                     .toList()
             );
