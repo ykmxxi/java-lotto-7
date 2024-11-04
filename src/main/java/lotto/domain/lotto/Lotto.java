@@ -21,14 +21,10 @@ public class Lotto {
         );
     }
 
-    public int calculateMatchingCount(final Lotto lotto) {
-        int matchingCount = 0;
-        for (LottoBall lottoBall : lottoBalls) {
-            if (lotto.lottoBalls.contains(lottoBall)) {
-                matchingCount++;
-            }
-        }
-        return matchingCount;
+    public int calculateMatchingCount(final Lotto other) {
+        return (int) lottoBalls.stream()
+                .filter(other.lottoBalls::contains)
+                .count();
     }
 
     public boolean has(final LottoBall lottoBall) {
