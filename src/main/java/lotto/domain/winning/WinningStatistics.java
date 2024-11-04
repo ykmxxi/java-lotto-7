@@ -30,7 +30,6 @@ public class WinningStatistics {
 
     public BigDecimal calculateReturnOnInvestment(final long totalAmount) {
         BigDecimal winningMoneyTotal = calculateWinningMoneyTotal();
-
         return winningMoneyTotal.divide(BigDecimal.valueOf(totalAmount), MathContext.DECIMAL64);
     }
 

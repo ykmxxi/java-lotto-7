@@ -6,7 +6,7 @@ public final class InputPattern {
 
     private static final Pattern PURCHASE_AMOUNT = Pattern.compile("^\\d+원?$|^\\d{1,3}(,\\d{3})*원?$");
     private static final Pattern WINNING_NUMBERS = Pattern.compile("^(\\d+,\\s?)+\\d+$");
-    private static final Pattern BONUS_NUMBER = Pattern.compile("\\d+");
+    private static final Pattern BONUS_NUMBER = Pattern.compile("\\d{1,2}");
 
     private InputPattern() {}
 

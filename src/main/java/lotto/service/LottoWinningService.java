@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import lotto.domain.lotto.Lotto;
+import lotto.domain.lotto.LottoBall;
 import lotto.domain.lotto.LottoTickets;
 import lotto.domain.lotto.PurchaseAmount;
 import lotto.domain.winning.LottoRank;
@@ -20,7 +21,7 @@ public class LottoWinningService {
 
     private final LottoTickets lottoTickets = new LottoTickets();
     private Lotto winningLotto;
-    private String bonusNumber;
+    private LottoBall bonusBall;
 
     public LottoPurchaseResponse buyAutoLotto(final long purchaseAmountInput) {
         PurchaseAmount purchaseAmount = new PurchaseAmount(purchaseAmountInput);
@@ -30,16 +31,19 @@ public class LottoWinningService {
         return toLottoPurchaseResponse(tickets);
     }
 
-    public void drawWinningLotto(final String winningNumbers) {
-        winningLotto = createWinningLotto(winningNumbers);
+    public void saveWinningLotto(final String winningNumbers) {
+        this.winningLotto = createWinningLotto(winningNumbers);
     }
 
-    public void drawBonusNumber(final String bonusNumber) {
-        this.bonusNumber = bonusNumber;
+    public void saveBonusNumber(final int bonusNumber) {
+        LottoBall bonusBall = LottoBall.draw(bonusNumber);
+        WinningDraw.validateBonusNumberDuplication(winningLotto, bonusBall);
+        this.bonusBall = bonusBall;
     }
 
-    public WinningDrawResponse drawWinning() {
-        return drawWinningWithBonusNumber();
+    public WinningDrawResponse startDrawWinning() {
+        WinningDraw winningDraw = WinningDraw.draw(winningLotto, bonusBall);
+        return calculateWinningStatistics(winningDraw);
     }
 
     private void saveAllLottoTicket(final PurchaseAmount purchaseAmount) {
@@ -54,11 +58,6 @@ public class LottoWinningService {
         NumbersCreator inputSplitNumbersCreator = new InputSplitNumbersCreator(winningNumbersInput);
         List<Integer> winningNumbers = inputSplitNumbersCreator.create();
         return Lotto.issue(winningNumbers);
-    }
-
-    private WinningDrawResponse drawWinningWithBonusNumber() {
-        WinningDraw winningDraw = WinningDraw.draw(winningLotto, Integer.parseInt(bonusNumber));
-        return calculateWinningStatistics(winningDraw);
     }
 
     private WinningDrawResponse calculateWinningStatistics(final WinningDraw winningDraw) {

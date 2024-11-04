@@ -6,26 +6,26 @@ import lotto.domain.lotto.LottoBall;
 public class WinningDraw {
 
     private final Lotto winningLotto;
-    private final LottoBall bonusNumber;
+    private final LottoBall bonusBall;
 
-    private WinningDraw(final Lotto winningLotto, final LottoBall bonusNumber) {
-        validateBonusNumberDuplication(winningLotto, bonusNumber);
+    private WinningDraw(final Lotto winningLotto, final LottoBall bonusBall) {
+        validateBonusNumberDuplication(winningLotto, bonusBall);
         this.winningLotto = winningLotto;
-        this.bonusNumber = bonusNumber;
+        this.bonusBall = bonusBall;
     }
 
-    public static WinningDraw draw(final Lotto winningLotto, final int bonusNumber) {
-        return new WinningDraw(winningLotto, LottoBall.draw(bonusNumber));
+    public static WinningDraw draw(final Lotto winningLotto, final LottoBall bonusBall) {
+        return new WinningDraw(winningLotto, bonusBall);
     }
 
     public LottoRank compare(final Lotto lotto) {
         int matchingCount = winningLotto.calculateMatchingCount(lotto);
-        boolean hasBonusNumber = lotto.has(bonusNumber);
+        boolean hasBonusNumber = lotto.has(bonusBall);
 
         return LottoRank.find(matchingCount, hasBonusNumber);
     }
 
-    private void validateBonusNumberDuplication(final Lotto winningLotto, final LottoBall bonusNumber) {
+    public static void validateBonusNumberDuplication(final Lotto winningLotto, final LottoBall bonusNumber) {
         if (winningLotto.has(bonusNumber)) {
             throw new IllegalArgumentException("보너스 번호가 당첨 번호와 중복되면 안됩니다.");
         }

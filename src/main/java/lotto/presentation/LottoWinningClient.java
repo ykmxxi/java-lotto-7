@@ -24,19 +24,20 @@ public class LottoWinningClient {
 
     public void run() {
         try {
-            LottoPurchaseResponse lottoPurchaseResponse = buyLotto();
-
+            LottoPurchaseResponse lottoPurchaseResponse = buyAutoLotto();
             resultView.printLottoPurchaseResult(lottoPurchaseResponse);
 
-            WinningDrawResponse winningDrawResponse = drawWinning();
+            saveWinningLotto();
+            saveBonusNumber();
 
+            WinningDrawResponse winningDrawResponse = lottoWinningService.startDrawWinning();
             resultView.printDrawWinningResult(winningDrawResponse);
         } finally {
             inputView.closeConsole();
         }
     }
 
-    private LottoPurchaseResponse buyLotto() {
+    private LottoPurchaseResponse buyAutoLotto() {
         try {
             String purchaseAmountInput = inputView.readPurchaseAmount()
                     .replaceAll("[,|원]", "");
@@ -44,60 +45,27 @@ public class LottoWinningClient {
             return lottoWinningService.buyAutoLotto(purchaseAmount);
         } catch (IllegalArgumentException e) {
             resultView.printUserExceptionMessage(e.getMessage());
-            return buyLotto();
+            return buyAutoLotto();
         }
     }
 
-    private WinningDrawResponse drawWinning() {
-        drawWinningLotto();
-        return drawWinningResponse();
-    }
-
-    private WinningDrawResponse drawWinningResponse() {
+    private void saveWinningLotto() {
         try {
-            drawBonusNumber();
-            return lottoWinningService.drawWinning();
+            String winningNumbers = inputView.readWinningNumbers();
+            lottoWinningService.saveWinningLotto(winningNumbers);
         } catch (IllegalArgumentException e) {
             resultView.printUserExceptionMessage(e.getMessage());
-            return drawWinningResponse();
+            saveWinningLotto();
         }
     }
 
-    private void drawWinningLotto() {
+    private void saveBonusNumber() {
         try {
-            String winningNumbers = readWinningNumbers();
-            lottoWinningService.drawWinningLotto(winningNumbers);
+            int bonusNumber = Integer.parseInt(inputView.readBonusNumber());
+            lottoWinningService.saveBonusNumber(bonusNumber);
         } catch (IllegalArgumentException e) {
             resultView.printUserExceptionMessage(e.getMessage());
-            drawWinningLotto();
-        }
-    }
-
-    private void drawBonusNumber() {
-        try {
-            String bonusNumber = readBonusNumber();
-            lottoWinningService.drawBonusNumber(bonusNumber);
-        } catch (IllegalArgumentException e) {
-            resultView.printUserExceptionMessage(e.getMessage());
-            drawBonusNumber();
-        }
-    }
-
-    private String readWinningNumbers() {
-        try {
-            return inputView.readWinningNumbers();
-        } catch (IllegalArgumentException e) {
-            resultView.printUserExceptionMessage(e.getMessage());
-            return readWinningNumbers();
-        }
-    }
-
-    private String readBonusNumber() {
-        try {
-            return inputView.readBonusNumber();
-        } catch (IllegalArgumentException e) {
-            resultView.printUserExceptionMessage(e.getMessage());
-            return readBonusNumber();
+            saveBonusNumber();
         }
     }
 
