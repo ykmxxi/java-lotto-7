@@ -9,6 +9,7 @@ public class InputView {
 
         String purchaseAmountInput = readInputLine();
         validatePurchaseAmountPattern(purchaseAmountInput);
+        validateBiggerThanLongMax(purchaseAmountInput);
         return purchaseAmountInput;
     }
 
@@ -62,16 +63,25 @@ public class InputView {
         }
     }
 
+    private void validateBiggerThanLongMax(final String input) {
+        try {
+            Long.parseLong(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("구입금액이 너무 큽니다. 다시 입력해 주세요. (ex. \"1000\", \"1,000\", \"1,000원\")");
+        }
+    }
+
     private void validateWinningNumbersPattern(final String input) {
         if (InputPattern.isInvalidWinningNumbers(input)) {
             throw new IllegalArgumentException(
-                    "당첨 번호는 숫자를 쉼표(,)로 구분해 입력해 주세요. 쉼표 후 공백을 한 번 넣을수도 있습니다. (ex. 1, 2, 3, 4, 5, 6)");
+                    "당첨 번호는 숫자를 쉼표(,)로 구분해 입력해 주세요. 쉼표 후 공백을 한 번 넣을수도 있습니다. (ex. 1, 2, 3, 4, 5, 6)"
+            );
         }
     }
 
     private void validateBonusNumberPattern(final String input) {
         if (InputPattern.isInvalidBonusNumber(input)) {
-            throw new IllegalArgumentException("보너스 번호는 양수를 입력해 주세요.");
+            throw new IllegalArgumentException("보너스 번호가 너무 큽니다. 다시 입력해 주세요. (ex. 45)");
         }
     }
 
