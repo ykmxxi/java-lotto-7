@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import lotto.domain.lotto.Lotto;
 
-class WinningTest {
+class WinningDrawTest {
 
     @DisplayName("당첨 번호와 보너스 번호 1개를 넣으면 당첨번호 추첨에 성공 한다.")
     @Test
@@ -23,7 +23,7 @@ class WinningTest {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
         int bonusNumber = 7;
 
-        assertDoesNotThrow(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber));
+        assertDoesNotThrow(() -> WinningDraw.draw(Lotto.issue(winningNumbers), bonusNumber));
     }
 
     @DisplayName("당첨 번호로 로또 발행을 실패하면 예외가 발생한다.")
@@ -32,7 +32,7 @@ class WinningTest {
     void 당첨번호_추첨_실패(List<Integer> winningNumbers) {
         int bonusNumber = 7;
 
-        assertThatThrownBy(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber))
+        assertThatThrownBy(() -> WinningDraw.draw(Lotto.issue(winningNumbers), bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -42,7 +42,7 @@ class WinningTest {
         List<Integer> winningNumbers = List.of(1, 2, 3, 4, 5, 6);
         int bonusNumber = 6;
 
-        assertThatThrownBy(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber))
+        assertThatThrownBy(() -> WinningDraw.draw(Lotto.issue(winningNumbers), bonusNumber))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -50,10 +50,10 @@ class WinningTest {
     @MethodSource("provideNumbersAndLottoRank")
     @ParameterizedTest
     void 당첨_확인(List<Integer> numbers, LottoRank expectedRank) {
-        Winning winning = Winning.draw(Lotto.issue(List.of(1, 2, 3, 4, 5, 6)), 7);
+        WinningDraw winningDraw = WinningDraw.draw(Lotto.issue(List.of(1, 2, 3, 4, 5, 6)), 7);
         Lotto lotto = Lotto.issue(numbers);
 
-        assertThat(winning.compare(lotto)).isEqualTo(expectedRank);
+        assertThat(winningDraw.compare(lotto)).isEqualTo(expectedRank);
     }
 
     static Stream<Arguments> provideWrongWinningNumbers() {

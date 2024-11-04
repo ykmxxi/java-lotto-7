@@ -10,10 +10,10 @@ import lotto.domain.lotto.Lotto;
 import lotto.domain.lotto.LottoTickets;
 import lotto.domain.lotto.PurchaseAmount;
 import lotto.domain.winning.LottoRank;
-import lotto.domain.winning.Winning;
+import lotto.domain.winning.WinningDraw;
 import lotto.domain.winning.WinningStatistics;
-import lotto.service.dto.DrawWinningResponse;
 import lotto.service.dto.LottoPurchaseResponse;
+import lotto.service.dto.WinningDrawResponse;
 import lotto.service.dto.WinningResult;
 
 public class LottoWinningService {
@@ -42,7 +42,7 @@ public class LottoWinningService {
         this.bonusNumber = bonusNumber;
     }
 
-    public DrawWinningResponse drawWinning() {
+    public WinningDrawResponse drawWinning() {
         return drawWinningWithBonusNumber();
     }
 
@@ -52,19 +52,19 @@ public class LottoWinningService {
         return Lotto.issue(winningNumbers);
     }
 
-    private DrawWinningResponse drawWinningWithBonusNumber() {
-        Winning winning = Winning.draw(winningLotto, Integer.parseInt(bonusNumber));
-        return calculateWinningStatistics(winning);
+    private WinningDrawResponse drawWinningWithBonusNumber() {
+        WinningDraw winningDraw = WinningDraw.draw(winningLotto, Integer.parseInt(bonusNumber));
+        return calculateWinningStatistics(winningDraw);
     }
 
-    private DrawWinningResponse calculateWinningStatistics(final Winning winning) {
+    private WinningDrawResponse calculateWinningStatistics(final WinningDraw winningDraw) {
         WinningStatistics winningStatistics = WinningStatistics.create();
         List<Lotto> tickets = lottoTickets.findAll();
         for (Lotto lotto : tickets) {
-            LottoRank rank = winning.compare(lotto);
+            LottoRank rank = winningDraw.compare(lotto);
             winningStatistics.save(rank);
         }
-        return toDrawWinningResponse(winningStatistics, tickets.size() * 1000L);
+        return toWinningDrawResponse(winningStatistics, tickets.size() * 1000L);
     }
 
     private LottoPurchaseResponse toLottoPurchaseResponse(final List<Lotto> tickets) {
@@ -79,13 +79,13 @@ public class LottoWinningService {
         return new LottoPurchaseResponse(tickets.size(), lottoNumbers);
     }
 
-    private DrawWinningResponse toDrawWinningResponse(
+    private WinningDrawResponse toWinningDrawResponse(
             final WinningStatistics winningStatistics,
             final long totalAmount
     ) {
         Map<WinningResult, Long> winningResultStatistics = createWinningResultStatistics(winningStatistics);
         BigDecimal returnOnInvestment = winningStatistics.calculateReturnOnInvestment(totalAmount);
-        return new DrawWinningResponse(winningResultStatistics, returnOnInvestment);
+        return new WinningDrawResponse(winningResultStatistics, returnOnInvestment);
     }
 
     private Map<WinningResult, Long> createWinningResultStatistics(final WinningStatistics winningStatistics) {

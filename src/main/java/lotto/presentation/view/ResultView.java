@@ -9,8 +9,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import lotto.service.dto.DrawWinningResponse;
 import lotto.service.dto.LottoPurchaseResponse;
+import lotto.service.dto.WinningDrawResponse;
 import lotto.service.dto.WinningResult;
 
 public class ResultView {
@@ -26,12 +26,12 @@ public class ResultView {
         System.out.println(builder);
     }
 
-    public void printDrawWinningResult(final DrawWinningResponse drawWinningResponse) {
+    public void printDrawWinningResult(final WinningDrawResponse winningDrawResponse) {
         StringBuilder builder = new StringBuilder();
 
         appendDrawWinningResultGuide(builder);
-        appendWinningResultStatistics(builder, drawWinningResponse);
-        appendReturnOnInvestment(builder, drawWinningResponse.returnOnInvestment());
+        appendWinningResultStatistics(builder, winningDrawResponse);
+        appendReturnOnInvestment(builder, winningDrawResponse.returnOnInvestment());
 
         System.out.println(builder);
     }
@@ -63,9 +63,9 @@ public class ResultView {
 
     private void appendWinningResultStatistics(
             final StringBuilder builder,
-            final DrawWinningResponse drawWinningResponse
+            final WinningDrawResponse winningDrawResponse
     ) {
-        Map<WinningResult, Long> winningResultStatistics = drawWinningResponse.winningResultStatistics();
+        Map<WinningResult, Long> winningResultStatistics = winningDrawResponse.winningResultStatistics();
         for (WinningResult winningResult : winningResultStatistics.keySet()) {
             String prefix = formatPrefix(winningResult);
 

@@ -3,19 +3,19 @@ package lotto.domain.winning;
 import lotto.domain.lotto.Lotto;
 import lotto.domain.lotto.LottoBall;
 
-public class Winning {
+public class WinningDraw {
 
     private final Lotto winningLotto;
     private final LottoBall bonusNumber;
 
-    private Winning(final Lotto winningLotto, final LottoBall bonusNumber) {
+    private WinningDraw(final Lotto winningLotto, final LottoBall bonusNumber) {
         validateBonusNumberDuplication(winningLotto, bonusNumber);
         this.winningLotto = winningLotto;
         this.bonusNumber = bonusNumber;
     }
 
-    public static Winning draw(final Lotto winningLotto, final int bonusNumber) {
-        return new Winning(winningLotto, LottoBall.draw(bonusNumber));
+    public static WinningDraw draw(final Lotto winningLotto, final int bonusNumber) {
+        return new WinningDraw(winningLotto, LottoBall.draw(bonusNumber));
     }
 
     public LottoRank compare(final Lotto lotto) {

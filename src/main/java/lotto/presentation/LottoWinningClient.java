@@ -3,8 +3,8 @@ package lotto.presentation;
 import lotto.presentation.view.InputView;
 import lotto.presentation.view.ResultView;
 import lotto.service.LottoWinningService;
-import lotto.service.dto.DrawWinningResponse;
 import lotto.service.dto.LottoPurchaseResponse;
+import lotto.service.dto.WinningDrawResponse;
 
 public class LottoWinningClient {
 
@@ -28,9 +28,9 @@ public class LottoWinningClient {
 
             resultView.printLottoPurchaseResult(lottoPurchaseResponse);
 
-            DrawWinningResponse drawWinningResponse = drawWinning();
+            WinningDrawResponse winningDrawResponse = drawWinning();
 
-            resultView.printDrawWinningResult(drawWinningResponse);
+            resultView.printDrawWinningResult(winningDrawResponse);
         } finally {
             inputView.closeConsole();
         }
@@ -48,12 +48,12 @@ public class LottoWinningClient {
         }
     }
 
-    private DrawWinningResponse drawWinning() {
+    private WinningDrawResponse drawWinning() {
         drawWinningLotto();
         return drawWinningResponse();
     }
 
-    private DrawWinningResponse drawWinningResponse() {
+    private WinningDrawResponse drawWinningResponse() {
         try {
             drawBonusNumber();
             return lottoWinningService.drawWinning();
