@@ -94,10 +94,10 @@ public class ResultView {
         NumberFormat moneyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
         if (winningResult.hasBonusNumber()) {
             return String.format("%d개 일치, 보너스 볼 일치 (%s원)", winningResult.matchingCount(),
-                    moneyFormat.format(winningResult.prizeMoney()));
+                    moneyFormat.format(winningResult.winningMoney()));
         }
         return String.format("%d개 일치 (%s원)", winningResult.matchingCount(),
-                moneyFormat.format(winningResult.prizeMoney()));
+                moneyFormat.format(winningResult.winningMoney()));
     }
 
     private String formatSuffix(final String winningResultStatistics) {
