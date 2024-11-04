@@ -5,17 +5,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
-public class LottoBall {
+public class LottoBall implements Comparable<LottoBall> {
 
     private static final Map<Integer, LottoBall> LOTTO_BALLS = new HashMap<>();
+    public static final int NUMBER_START_INCLUSIVE = 1;
+    public static final int NUMBER_END_INCLUSIVE = 45;
 
     private final int number;
 
     static {
-        IntStream.rangeClosed(
-                LottoRule.LOTTO_NUMBER_START_INCLUSIVE.value(),
-                LottoRule.LOTTO_NUMBER_END_INCLUSIVE.value()
-        ).forEach(number -> LOTTO_BALLS.put(number, new LottoBall(number)));
+        IntStream.rangeClosed(NUMBER_START_INCLUSIVE, NUMBER_END_INCLUSIVE)
+                .forEach(number -> LOTTO_BALLS.put(number, new LottoBall(number)));
     }
 
     private LottoBall(final int number) {
@@ -28,13 +28,18 @@ public class LottoBall {
     }
 
     private static void validateLottoNumberRange(final int number) {
-        if (LottoRule.isRangeRuleViolation(number)) {
+        if (number < NUMBER_START_INCLUSIVE || number > NUMBER_END_INCLUSIVE) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 1~45 사이의 숫자여야 합니다.");
         }
     }
 
     public int number() {
         return number;
+    }
+
+    @Override
+    public int compareTo(final LottoBall o) {
+        return this.number - o.number;
     }
 
     @Override

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Lotto {
 
+    public static final int LOTTO_BALL_COUNT = 6;
+
     private final List<LottoBall> lottoBalls;
 
     private Lotto(List<LottoBall> lottoBalls) {
@@ -34,18 +36,18 @@ public class Lotto {
     }
 
     private void validate(List<LottoBall> lottoBalls) {
-        validateLottoBallsSize(lottoBalls);
+        validateLottoBallCount(lottoBalls);
         validateDuplication(lottoBalls);
     }
 
-    private void validateLottoBallsSize(final List<LottoBall> lottoBalls) {
-        if (LottoRule.isSizeRuleViolation(lottoBalls.size())) {
+    private void validateLottoBallCount(final List<LottoBall> lottoBalls) {
+        if (lottoBalls.size() != LOTTO_BALL_COUNT) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
         }
     }
 
     private void validateDuplication(final List<LottoBall> lottoBalls) {
-        if (LottoRule.isSizeRuleViolation(new HashSet<>(lottoBalls).size())) {
+        if (new HashSet<>(lottoBalls).size() != LOTTO_BALL_COUNT) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 중복되지 않아야 합니다.");
         }
     }
