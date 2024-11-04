@@ -1,8 +1,8 @@
 package lotto;
 
 import lotto.presentation.LottoWinningClient;
-import lotto.presentation.view.InputView;
-import lotto.presentation.view.ResultView;
+import lotto.presentation.input.InputView;
+import lotto.presentation.result.ResultView;
 import lotto.service.LottoWinningService;
 
 public class Application {

@@ -1,7 +1,7 @@
 package lotto.presentation;
 
-import lotto.presentation.view.InputView;
-import lotto.presentation.view.ResultView;
+import lotto.presentation.input.InputView;
+import lotto.presentation.result.ResultView;
 import lotto.service.LottoWinningService;
 import lotto.service.dto.LottoPurchaseResponse;
 import lotto.service.dto.WinningDrawResponse;

@@ -1,8 +1,8 @@
-package lotto.presentation.view;
+package lotto.presentation.input;
 
-import static lotto.presentation.view.InputPattern.isInvalidBonusNumber;
-import static lotto.presentation.view.InputPattern.isInvalidPurchaseAmount;
-import static lotto.presentation.view.InputPattern.isInvalidWinningNumbers;
+import static lotto.presentation.input.InputPattern.isInvalidBonusNumber;
+import static lotto.presentation.input.InputPattern.isInvalidPurchaseAmount;
+import static lotto.presentation.input.InputPattern.isInvalidWinningNumbers;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.DisplayName;
