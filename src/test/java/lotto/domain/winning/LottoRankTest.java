@@ -25,6 +25,13 @@ class LottoRankTest {
         assertThat(find(matchingCount, hasNumber)).isEqualTo(expectedRank);
     }
 
+    @DisplayName("당첨 개수를 알려주면 총 당첨 금액을 계산한다.")
+    @MethodSource(value = "provideRankAndExpectedWinningMoneyTotal")
+    @ParameterizedTest
+    void 로또_등수별_총_당첨_금액_계산(LottoRank lottoRank, long expectedWinningMoneyTotal) {
+        assertThat(lottoRank.calculateWinningMoneyTotal(1L)).isEqualTo(expectedWinningMoneyTotal);
+    }
+
     static Stream<Arguments> provideMatchingCountAndHasNumberWithExpectedRank() {
         return Stream.of(
                 Arguments.of(0, true, NONE),
@@ -36,6 +43,16 @@ class LottoRankTest {
                 Arguments.of(5, false, THIRD),
                 Arguments.of(5, true, SECOND),
                 Arguments.of(6, false, FIRST)
+        );
+    }
+
+    static Stream<Arguments> provideRankAndExpectedWinningMoneyTotal() {
+        return Stream.of(
+                Arguments.of(FIFTH, 5_000L),
+                Arguments.of(FOURTH, 50_000L),
+                Arguments.of(THIRD, 1_500_000L),
+                Arguments.of(SECOND, 30_000_000L),
+                Arguments.of(FIRST, 2_000_000_000L)
         );
     }
 
