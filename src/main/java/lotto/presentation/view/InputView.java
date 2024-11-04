@@ -1,19 +1,14 @@
 package lotto.presentation.view;
 
-import java.util.regex.Pattern;
-
 import camp.nextstep.edu.missionutils.Console;
 
 public class InputView {
-
-    private static final Pattern POSITIVE_NUMBER = Pattern.compile("\\d+");
-    private static final Pattern WINNING_NUMBERS = Pattern.compile("(\\d+,){5}\\d+");
 
     public String readPurchaseAmount() {
         System.out.println("구입금액을 입력해 주세요.");
 
         String purchaseAmountInput = readInputLine();
-        validatePositiveNumber(purchaseAmountInput);
+        validatePurchaseAmountPattern(purchaseAmountInput);
         return purchaseAmountInput;
     }
 
@@ -30,7 +25,7 @@ public class InputView {
         System.out.println("보너스 번호를 입력해 주세요.");
 
         String bonusNumberInput = readInputLine();
-        validatePositiveNumber(bonusNumberInput);
+        validateBonusNumberPattern(bonusNumberInput);
         return bonusNumberInput;
     }
 
@@ -61,19 +56,22 @@ public class InputView {
         }
     }
 
-    private void validatePositiveNumber(final String input) {
-        if (!POSITIVE_NUMBER.matcher(input)
-                .matches()
-        ) {
-            throw new IllegalArgumentException("양수를 입력해 주세요.");
+    private void validatePurchaseAmountPattern(final String input) {
+        if (InputPattern.isInvalidPurchaseAmount(input)) {
+            throw new IllegalArgumentException("구입금액 형식에 맞게 다시 입력해 주세요.(ex. \"1000\", \"1,000\", \"1,000원\")");
         }
     }
 
     private void validateWinningNumbersPattern(final String input) {
-        if (!WINNING_NUMBERS.matcher(input)
-                .matches()
-        ) {
-            throw new IllegalArgumentException("당첨 번호는 6개의 숫자를 쉼표(,)로 구분해 입력해 주세요.");
+        if (InputPattern.isInvalidWinningNumbers(input)) {
+            throw new IllegalArgumentException(
+                    "당첨 번호는 숫자를 쉼표(,)로 구분해 입력해 주세요. 쉼표 후 공백을 한 번 넣을수도 있습니다. (ex. 1, 2, 3, 4, 5, 6)");
+        }
+    }
+
+    private void validateBonusNumberPattern(final String input) {
+        if (InputPattern.isInvalidBonusNumber(input)) {
+            throw new IllegalArgumentException("보너스 번호는 양수를 입력해 주세요.");
         }
     }
 

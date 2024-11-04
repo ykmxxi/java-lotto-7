@@ -1,6 +1,5 @@
 package lotto.presentation;
 
-import camp.nextstep.edu.missionutils.Console;
 import lotto.presentation.view.InputView;
 import lotto.presentation.view.ResultView;
 import lotto.service.LottoWinningService;
@@ -39,8 +38,10 @@ public class LottoWinningClient {
 
     private LottoPurchaseResponse buyLotto() {
         try {
-            long purchaseAmountInput = Long.parseLong(inputView.readPurchaseAmount());
-            return lottoWinningService.purchaseLotto(purchaseAmountInput);
+            String purchaseAmountInput = inputView.readPurchaseAmount()
+                    .replaceAll("[,|원]", "");
+            long purchaseAmount = Long.parseLong(purchaseAmountInput);
+            return lottoWinningService.purchaseLotto(purchaseAmount);
         } catch (IllegalArgumentException e) {
             resultView.printUserExceptionMessage(e.getMessage());
             return buyLotto();
