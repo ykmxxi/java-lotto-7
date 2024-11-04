@@ -18,7 +18,7 @@ public class WinningDraw {
         return new WinningDraw(winningLotto, bonusBall);
     }
 
-    public LottoRank compare(final Lotto lotto) {
+    public LottoRank compareWithWinningLotto(final Lotto lotto) {
         int matchingCount = winningLotto.calculateMatchingCount(lotto);
         boolean hasBonusNumber = lotto.has(bonusBall);
 

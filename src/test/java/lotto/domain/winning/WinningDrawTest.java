@@ -54,7 +54,7 @@ class WinningDrawTest {
         WinningDraw winningDraw = WinningDraw.draw(Lotto.issue(List.of(1, 2, 3, 4, 5, 6)), LottoBall.draw(7));
         Lotto lotto = Lotto.issue(numbers);
 
-        assertThat(winningDraw.compare(lotto)).isEqualTo(expectedRank);
+        assertThat(winningDraw.compareWithWinningLotto(lotto)).isEqualTo(expectedRank);
     }
 
     static Stream<Arguments> provideWrongWinningNumbers() {

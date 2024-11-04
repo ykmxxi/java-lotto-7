@@ -64,7 +64,7 @@ public class LottoWinningService {
         WinningStatistics winningStatistics = WinningStatistics.create();
         List<Lotto> tickets = lottoTickets.findAll();
         for (Lotto lotto : tickets) {
-            LottoRank rank = winningDraw.compare(lotto);
+            LottoRank rank = winningDraw.compareWithWinningLotto(lotto);
             winningStatistics.save(rank);
         }
         return toWinningDrawResponse(winningStatistics, tickets.size() * 1000L);
