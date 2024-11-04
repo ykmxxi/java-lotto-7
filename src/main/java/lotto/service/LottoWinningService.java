@@ -84,7 +84,7 @@ public class LottoWinningService {
     ) {
         Map<WinningResult, Long> winningResultStatistics = createWinningResultStatistics(winningStatistics);
         BigDecimal rateOfReturn = winningStatistics.calculateRateOfReturn(totalAmount);
-        return new DrawWinningResponse(winningResultStatistics, rateOfReturn.toString());
+        return new DrawWinningResponse(winningResultStatistics, rateOfReturn);
     }
 
     private Map<WinningResult, Long> createWinningResultStatistics(final WinningStatistics winningStatistics) {

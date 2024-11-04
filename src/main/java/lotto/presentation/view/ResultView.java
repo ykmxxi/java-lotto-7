@@ -1,5 +1,8 @@
 package lotto.presentation.view;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -73,8 +76,12 @@ public class ResultView {
         }
     }
 
-    private void appendRateOfReturn(final StringBuilder builder, final String rateOfReturn) {
-        String rateOfReturnMessage = formatRateOfReturnMessage(rateOfReturn);
+    private void appendRateOfReturn(final StringBuilder builder, final BigDecimal rateOfReturn) {
+        DecimalFormat rateOfReturnFormat = new DecimalFormat("#,##0.0");
+        BigDecimal rateOfReturnPercentageValue = rateOfReturn.multiply(BigDecimal.valueOf(100L))
+                .setScale(1, RoundingMode.HALF_UP);
+
+        String rateOfReturnMessage = formatRateOfReturnMessage(rateOfReturnFormat.format(rateOfReturnPercentageValue));
         builder.append(rateOfReturnMessage);
     }
 
@@ -88,13 +95,13 @@ public class ResultView {
     }
 
     private String formatPrefix(final WinningResult winningResult) {
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.KOREA);
+        NumberFormat moneyFormat = NumberFormat.getNumberInstance(Locale.KOREA);
         if (winningResult.hasBonusNumber()) {
             return String.format("%d개 일치, 보너스 볼 일치 (%s원)", winningResult.matchingCount(),
-                    numberFormat.format(winningResult.prizeMoney()));
+                    moneyFormat.format(winningResult.prizeMoney()));
         }
         return String.format("%d개 일치 (%s원)", winningResult.matchingCount(),
-                numberFormat.format(winningResult.prizeMoney()));
+                moneyFormat.format(winningResult.prizeMoney()));
     }
 
     private String formatSuffix(final String winningResultStatistics) {
