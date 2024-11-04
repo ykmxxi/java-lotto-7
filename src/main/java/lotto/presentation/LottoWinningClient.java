@@ -41,11 +41,19 @@ public class LottoWinningClient {
         try {
             String purchaseAmountInput = inputView.readPurchaseAmount()
                     .replaceAll("[,|원]", "");
-            long purchaseAmount = Long.parseLong(purchaseAmountInput);
+            long purchaseAmount = parseLong(purchaseAmountInput);
             return lottoWinningService.buyAutoLotto(purchaseAmount);
         } catch (IllegalArgumentException e) {
             resultView.printUserExceptionMessage(e.getMessage());
             return buyAutoLotto();
+        }
+    }
+
+    private long parseLong(final String purchaseAmountInput) {
+        try {
+            return Long.parseLong(purchaseAmountInput);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("구입금액이 너무 큽니다. 다시 입력해 주세요. (ex. \"1000\", \"1,000\", \"1,000원\")");
         }
     }
 

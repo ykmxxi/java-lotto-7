@@ -9,7 +9,6 @@ public class InputView {
 
         String purchaseAmountInput = readInputLine();
         validatePurchaseAmountPattern(purchaseAmountInput);
-        validateBiggerThanLongMax(purchaseAmountInput);
         return purchaseAmountInput;
     }
 
@@ -60,14 +59,6 @@ public class InputView {
     private void validatePurchaseAmountPattern(final String input) {
         if (InputPattern.isInvalidPurchaseAmount(input)) {
             throw new IllegalArgumentException("구입금액 형식에 맞게 다시 입력해 주세요.(ex. \"1000\", \"1,000\", \"1,000원\")");
-        }
-    }
-
-    private void validateBiggerThanLongMax(final String input) {
-        try {
-            Long.parseLong(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("구입금액이 너무 큽니다. 다시 입력해 주세요. (ex. \"1000\", \"1,000\", \"1,000원\")");
         }
     }
 
