@@ -33,8 +33,8 @@ class WinningStatisticsTest {
         assertThat(winningStatistics.findWinningCountByLottoRank(lottoRank)).isEqualTo(1L);
     }
 
-    @DisplayName("소수점 아래 둘째 자리에서 반올림한 수익률 값을 계산한다.")
-    @CsvSource(value = {"8000,62.5", "3000,166.7"})
+    @DisplayName("정확한 소수점 계산과 순환 소수 방지를 위해 최대 16자리로(마지막 자리 밑에서 반올림) 제한해 수익률을 계산한다.")
+    @CsvSource(value = {"8000,0.625", "3000,1.666666666666667"})
     @ParameterizedTest
     void 당첨_통계_수익률_계산(long totalAmount, String expectedRateOfReturn) {
         winningStatistics.save(LottoRank.FIFTH);

@@ -1,14 +1,12 @@
 package lotto.domain.winning;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.math.MathContext;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
 public class WinningStatistics {
-
-    private static final BigDecimal PERCENT_MULTIPLIER = BigDecimal.valueOf(100L);
 
     private final Map<LottoRank, Long> statistics;
 
@@ -33,8 +31,7 @@ public class WinningStatistics {
     public BigDecimal calculateRateOfReturn(final long totalAmount) {
         BigDecimal winningMoneyTotal = calculateWinningMoneyTotal();
 
-        return winningMoneyTotal.multiply(PERCENT_MULTIPLIER)
-                .divide(BigDecimal.valueOf(totalAmount), 1, RoundingMode.HALF_UP);
+        return winningMoneyTotal.divide(BigDecimal.valueOf(totalAmount), MathContext.DECIMAL64);
     }
 
     private BigDecimal calculateWinningMoneyTotal() {
