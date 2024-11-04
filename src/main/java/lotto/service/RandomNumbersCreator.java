@@ -17,7 +17,7 @@ public class RandomNumbersCreator implements NumbersCreator {
                     Lotto.LOTTO_BALL_COUNT
             );
         } catch (IllegalArgumentException e) {
-            throw new IllegalStateException("[ERROR] 로또 번호 자동 생성에 문제가 생겨 프로그램을 종료합니다. 다시 실행해 주세요.");
+            throw new IllegalStateException("로또 번호 자동 생성에 문제가 생겨 프로그램을 종료합니다. 다시 실행해 주세요.");
         }
     }
 

@@ -42,7 +42,7 @@ public class LottoWinningClient {
             long purchaseAmountInput = Long.parseLong(inputView.readPurchaseAmount());
             return lottoWinningService.purchaseLotto(purchaseAmountInput);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            resultView.printUserExceptionMessage(e.getMessage());
             return buyLotto();
         }
     }
@@ -58,7 +58,7 @@ public class LottoWinningClient {
             drawBonusNumber();
             return lottoWinningService.drawWinning();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            resultView.printUserExceptionMessage(e.getMessage());
             return drawWinningResponse();
         }
     }
@@ -68,7 +68,7 @@ public class LottoWinningClient {
             String winningNumbers = readWinningNumbers();
             lottoWinningService.drawWinningLotto(winningNumbers);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            resultView.printUserExceptionMessage(e.getMessage());
             drawWinningLotto();
         }
     }
@@ -78,7 +78,7 @@ public class LottoWinningClient {
             String bonusNumber = readBonusNumber();
             lottoWinningService.drawBonusNumber(bonusNumber);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            resultView.printUserExceptionMessage(e.getMessage());
             drawBonusNumber();
         }
     }
@@ -87,7 +87,7 @@ public class LottoWinningClient {
         try {
             return inputView.readWinningNumbers();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            resultView.printUserExceptionMessage(e.getMessage());
             return readWinningNumbers();
         }
     }
@@ -96,7 +96,7 @@ public class LottoWinningClient {
         try {
             return inputView.readBonusNumber();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            resultView.printUserExceptionMessage(e.getMessage());
             return readBonusNumber();
         }
     }

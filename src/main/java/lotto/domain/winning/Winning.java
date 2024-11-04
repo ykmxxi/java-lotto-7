@@ -27,7 +27,7 @@ public class Winning {
 
     private void validateBonusNumberDuplication(final Lotto winningLotto, final LottoBall bonusNumber) {
         if (winningLotto.has(bonusNumber)) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호가 당첨 번호와 중복되면 안됩니다.");
+            throw new IllegalArgumentException("보너스 번호가 당첨 번호와 중복되면 안됩니다.");
         }
     }
 

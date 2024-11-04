@@ -32,7 +32,7 @@ class InputSplitNumbersCreatorTest {
 
         assertThatThrownBy(() -> inputSplitNumbersCreator.create())
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]");
+                ;
     }
 
     static Stream<Arguments> provideInputAndExpectedNumbers() {

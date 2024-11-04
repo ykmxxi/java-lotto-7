@@ -33,8 +33,7 @@ class WinningTest {
         int bonusNumber = 7;
 
         assertThatThrownBy(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("보너스 번호가 당첨 번호에 존재하면 예외가 발생한다.")
@@ -44,8 +43,7 @@ class WinningTest {
         int bonusNumber = 6;
 
         assertThatThrownBy(() -> Winning.draw(Lotto.issue(winningNumbers), bonusNumber))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]");
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("로또 번호를 주면 당첨을 비교해준다.")

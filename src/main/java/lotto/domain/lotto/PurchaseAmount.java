@@ -21,13 +21,13 @@ public class PurchaseAmount {
 
     private void validateAmountUnit(final long value) {
         if ((value % LOTTO_TICKET_PRICE != 0)) {
-            throw new IllegalArgumentException("[ERROR] 구입금액은 1,000원 단위여야 합니다.");
+            throw new IllegalArgumentException("구입금액은 1,000원 단위여야 합니다.");
         }
     }
 
     private void validateOutOfRange(final long value) {
         if (value < LOTTO_TICKET_PRICE || value > MAX_PURCHASE_AMOUNT) {
-            throw new IllegalArgumentException("[ERROR] 구입금액은 1,000~100,000원까지 가능합니다.");
+            throw new IllegalArgumentException("구입금액은 1,000~100,000원까지 가능합니다.");
         }
     }
 

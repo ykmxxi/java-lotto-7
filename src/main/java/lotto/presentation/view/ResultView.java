@@ -33,6 +33,10 @@ public class ResultView {
         System.out.println(builder);
     }
 
+    public void printUserExceptionMessage(final String exceptionMessage) {
+        System.out.println(String.join(" ", "[ERROR]", exceptionMessage));
+    }
+
     private void appendPurchaseCountMessage(final StringBuilder builder, final String purchaseCountMessage) {
         builder.append(NEW_LINE)
                 .append(purchaseCountMessage)

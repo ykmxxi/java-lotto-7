@@ -42,13 +42,13 @@ public class Lotto {
 
     private void validateLottoBallCount(final List<LottoBall> lottoBalls) {
         if (lottoBalls.size() != LOTTO_BALL_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
+            throw new IllegalArgumentException("로또 번호는 6개여야 합니다.");
         }
     }
 
     private void validateDuplication(final List<LottoBall> lottoBalls) {
         if (new HashSet<>(lottoBalls).size() != LOTTO_BALL_COUNT) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 중복되지 않아야 합니다.");
+            throw new IllegalArgumentException("로또 번호는 중복되지 않아야 합니다.");
         }
     }
 

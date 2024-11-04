@@ -53,12 +53,8 @@ public class LottoWinningService {
     }
 
     private DrawWinningResponse drawWinningWithBonusNumber() {
-        try {
-            Winning winning = Winning.draw(winningLotto, Integer.parseInt(bonusNumber));
-            return calculateWinningStatistics(winning);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호가 유효하지 않습니다.");
-        }
+        Winning winning = Winning.draw(winningLotto, Integer.parseInt(bonusNumber));
+        return calculateWinningStatistics(winning);
     }
 
     private DrawWinningResponse calculateWinningStatistics(final Winning winning) {

@@ -22,8 +22,7 @@ class PurchaseAmountTest {
     void 구매_금액은_천원_단위가_아니면_예외_발생() {
         assertThatThrownBy(() -> new PurchaseAmount(1100))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]")
-                .hasMessageContaining("구입금액");
+                .hasMessageContaining("구입금액", "단위");
     }
 
     @DisplayName("구매 금액의 범위 1,000원~100,000원을 벗어나면 예외가 발생한다.")
@@ -32,8 +31,7 @@ class PurchaseAmountTest {
     void 구매_금액은_범위를_벗어나면_예외_발생(long purchaseAmountInput) {
         assertThatThrownBy(() -> new PurchaseAmount(purchaseAmountInput))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]")
-                .hasMessageContaining("구입금액");
+                .hasMessageContaining("구입금액", "1,000", "100,000");
     }
 
 }

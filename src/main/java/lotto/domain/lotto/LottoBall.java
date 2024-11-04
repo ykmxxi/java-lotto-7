@@ -29,7 +29,7 @@ public class LottoBall implements Comparable<LottoBall> {
 
     private static void validateLottoNumberRange(final int number) {
         if (number < NUMBER_START_INCLUSIVE || number > NUMBER_END_INCLUSIVE) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 1~45 사이의 숫자여야 합니다.");
+            throw new IllegalArgumentException("로또 번호는 1~45 사이의 숫자여야 합니다.");
         }
     }
 

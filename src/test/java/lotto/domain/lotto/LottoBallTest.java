@@ -23,7 +23,7 @@ class LottoBallTest {
     void 범위를_벗어난_로또볼은_예외_발생(int number) {
         assertThatThrownBy(() -> LottoBall.draw(number))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageStartingWith("[ERROR]");
+                .hasMessageContainingAll("로또 번호", "1", "45");
     }
 
 }

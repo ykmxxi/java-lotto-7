@@ -41,19 +41,19 @@ public class InputView {
             validateBlank(inputLine);
             return inputLine;
         } catch (IllegalStateException e) {
-            throw new IllegalStateException("[ERROR] 콘솔에 문제가 생겨 프로그램을 종료합니다. 다시 실행해 주세요.");
+            throw new IllegalStateException("콘솔에 문제가 생겨 프로그램을 종료합니다. 다시 실행해 주세요.");
         }
     }
 
     private void validateNull(final String input) {
         if (input == null) {
-            throw new IllegalStateException("[ERROR] 콘솔에 문제가 생겨 프로그램을 종료합니다. 다시 실행해 주세요.");
+            throw new IllegalStateException("콘솔에 문제가 생겨 프로그램을 종료합니다. 다시 실행해 주세요.");
         }
     }
 
     private void validateBlank(final String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 값을 입력해 주세요.");
+            throw new IllegalArgumentException("값을 입력해 주세요.");
         }
     }
 
@@ -61,7 +61,7 @@ public class InputView {
         if (!POSITIVE_NUMBER.matcher(input)
                 .matches()
         ) {
-            throw new IllegalArgumentException("[ERROR] 양수를 입력해 주세요.");
+            throw new IllegalArgumentException("양수를 입력해 주세요.");
         }
     }
 
@@ -69,7 +69,7 @@ public class InputView {
         if (!WINNING_NUMBERS.matcher(input)
                 .matches()
         ) {
-            throw new IllegalArgumentException("[ERROR] 당첨 번호는 6개의 숫자를 쉼표(,)로 구분해 입력해 주세요.");
+            throw new IllegalArgumentException("당첨 번호는 6개의 숫자를 쉼표(,)로 구분해 입력해 주세요.");
         }
     }
 
