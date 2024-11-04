@@ -34,6 +34,10 @@ public class InputView {
         return bonusNumberInput;
     }
 
+    public void consoleClose() {
+        Console.close();
+    }
+
     private String readInputLine() {
         try {
             String inputLine = Console.readLine();

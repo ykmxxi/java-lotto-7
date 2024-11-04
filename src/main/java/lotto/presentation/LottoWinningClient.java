@@ -33,7 +33,7 @@ public class LottoWinningClient {
 
             resultView.printDrawWinningResult(drawWinningResponse);
         } finally {
-            Console.close();
+            inputView.consoleClose();
         }
     }
 
