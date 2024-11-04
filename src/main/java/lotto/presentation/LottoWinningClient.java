@@ -32,7 +32,7 @@ public class LottoWinningClient {
 
             resultView.printDrawWinningResult(drawWinningResponse);
         } finally {
-            inputView.consoleClose();
+            inputView.closeConsole();
         }
     }
 
@@ -47,7 +47,6 @@ public class LottoWinningClient {
             return buyLotto();
         }
     }
-
 
     private DrawWinningResponse drawWinning() {
         drawWinningLotto();

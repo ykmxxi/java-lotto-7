@@ -29,7 +29,7 @@ public class InputView {
         return bonusNumberInput;
     }
 
-    public void consoleClose() {
+    public void closeConsole() {
         Console.close();
     }
 
